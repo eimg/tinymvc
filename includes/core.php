@@ -137,3 +137,15 @@ function redirect($url) {
 	}
 	exit(0);
 }
+
+function load_model($model) {
+	global $config;
+
+	$file = "{$config['root']}/models/{$model}.php";
+
+	if(file_exists($file)) {
+		include_once($file);
+	} else {
+		echo "Cannot load model - $model";
+	}
+}

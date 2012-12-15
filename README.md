@@ -68,5 +68,9 @@ When you need to add CSS Link, JS Source, Hyperlinks, Images and Forms to your v
 ###More
 For more information, view the example controllers and other source codes. For example, you can check for available database methods in database wrapper class located in <code>includes/db.php</code>.
 
+##Example App
+Source Code: <a href="https://github.com/eimg/tinynote/">https://github.com/eimg/tinynote/</a>
+Demo: <a href="http://fairwayweb.com/tinynote/">http://fairwayweb.com/tinynote/</a>
+
 ##Licenses
 Tinymvc is license under <a href="https://github.com/eimg/tinymvc/blob/master/LICENSE.md">MIT License</a>. Please feel free to use, modify and redistribute as you wish.
