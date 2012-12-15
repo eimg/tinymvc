@@ -1,12 +1,27 @@
 <?php
-# Sqlite DB Wrapper
+# Database Wrapper
+# Supporting MySQL and Sqlite
+# Check config.php for database configuration
+
 class Database
 {
 	function Database() {
 		global $config;
 
 		try {
-			$this->db = new PDO("sqlite:{$config['root']}/{$config['db']}");
+
+			switch($config["dbdriver"]) {
+				case "sqlite":
+					$this->db = new PDO("sqlite:{$config['root']}/{$config['db']}");
+					break;
+				case "mysql":
+					$this->db = new PDO("mysql:host={$config['dbhost']};dbname={$config['dbname']}", $config['dbuser'], $config['dbpass']);
+					break;
+				default:
+					echo "Unsuportted DB Driver! Check the configuration.";
+					exit(1);
+			}
+			
 		} catch(PDOException $e) {
 			return $e->getMessage();
 		}

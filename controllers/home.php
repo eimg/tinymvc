@@ -14,7 +14,9 @@ switch($action) {
 }
 
 function show_home() {
-	render("home");
+	$data['msg'] = "TinyMVC is a PHP micro framework with MVC router.";
+
+	render("home", $data);
 }
 
 function show_about() {

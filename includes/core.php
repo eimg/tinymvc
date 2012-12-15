@@ -97,7 +97,7 @@ function load_controller($controller) {
 	}
 }
 
-function render($template) {
+function render($template, $data = array()) {
 	global $config, $route;
 
 	# Create routing variables
@@ -106,8 +106,14 @@ function render($template) {
 
 	$template = "views/{$controller}/{$template}.php";
 
+	# Setting route variables
 	for($i = 0; $i < count($route); $i++) {
 		$$route[$i] = $requests[$i];
+	}
+
+	# Setting data params variables
+	foreach($data as $key => $value) {
+		$$key = $value;
 	}
 
 	if(file_exists($template)) {
@@ -115,4 +121,19 @@ function render($template) {
 	} else {
 		echo "<span style='color:#900'>View missing! Create - $template</span><br />";
 	}
+}
+
+function redirect($url) {
+	global $config;
+
+	if(!preg_match("/^https?:\/\//", $url))
+		$url = "{$config['path']}/$url";
+
+	if (headers_sent()) {
+		echo "<script>document.location.href='$url';</script>\n";
+	} else {
+		@ob_end_clean();				# clear output buffer
+		header( "Location: ". $url );
+	}
+	exit(0);
 }
