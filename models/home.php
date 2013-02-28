@@ -6,6 +6,9 @@ function record_and_send_contact($data) {
 		return false;
 	}
 
-	//$result = $db->create("contact_records", $data);
+	$data['name'] = f($data['name']);
+	$data['msg'] = f($data['msg']);
+
+	$result = $db->create("contact_records", $data);
 	return $result;
 }
