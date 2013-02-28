@@ -1,5 +1,7 @@
 #TinyMVC
-TinyMVC is a PHP micro framework with MVC router, especially designed to quickly bootstrap REST apps without unnecessary overhead and complexity. Requires Apache mod_rewrite and PHP short open tags.
+TinyMVC is a PHP micro framework with MVC router and responsive web design boilerplate, especially designed to quickly bootstrap web apps without unnecessary overhead and complexity. The structure and code are construct in simple imperative manner so that developer can get full understanding and control over base framework as well as the app.
+
+Requires Apache mod_rewrite and PHP short open tags.
 
 ##Getting Start
 

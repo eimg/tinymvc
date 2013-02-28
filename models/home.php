@@ -1,1 +1,11 @@
 <?php
+function record_and_send_contact($data) {
+	$db = new db();
+
+	if(!$data['name'] or !$data['email'] or !$data['msg']) {
+		return false;
+	}
+
+	//$result = $db->create("contact_records", $data);
+	return $result;
+}

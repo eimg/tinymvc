@@ -1,0 +1,199 @@
+/* DESKTOP / BIG
+----------------------*/
+#container {
+	padding: 1.618em;
+	margin: 0 auto; 
+	max-width: 60em;
+}
+
+h1 {
+	background: url(../img/logo.png) no-repeat 0;
+	font-size: 1.8em;
+	padding: 0.5em 0 0.5em 2em;
+}
+
+nav ul {
+	max-width: 60em;
+}
+
+nav ul li {
+	border-bottom: 0 none;
+	width: auto;
+}
+
+nav ul a {
+	padding: 0.3em 1.5em;
+}
+
+#main {
+	padding: 1em;
+}
+
+.hero {
+	padding-bottom: 0;
+}
+
+.figure {
+	float: left;
+	width: 22em;
+}
+
+.welcome {
+	float: right;
+	width: 35em;
+}
+
+h2 {
+	font-size: 1.4em;
+	margin-top: 0.3em;
+}
+
+p {
+	max-width: 100%;
+	font-size: 1em;
+	line-height: 1.5em;
+}
+
+.primary-action {
+	width: 16em;
+}
+
+.secondary-action {
+	width: auto;
+	margin-left: 1em;
+}
+
+.feature {
+	margin-top: 0;
+}
+
+.column {
+	padding: 1em;
+	width: 45%;
+	margin-bottom: 0;
+}
+
+.feature-img {
+	width: 38%;
+}
+
+.feature-content {
+	width: 59%;
+}
+
+.feature .column:last-child {
+	margin-left: 1em;
+}
+
+.column h3 {
+	margin-top: 0.2em;
+	padding-bottom: 0.5em;
+	font-size: 1.1em;
+}
+
+.column p {
+	font-size: 0.85em;
+}
+
+footer {
+	font-size:  0.8em;
+}
+
+footer p {
+	width: 70%;
+}
+
+/* Pages */
+.info {
+	padding: 0 0.5em;
+}
+
+.info p {
+	font-size: 1em;
+	margin-bottom: 1em;
+}
+
+.info h3 {
+	font-size: 1.4em;
+	margin: 1em 0 0.5em 0;
+	padding: 0 0 0.5em 0;
+	border-bottom: 1px solid #ddd;
+}
+
+.info h4 {
+	font-size: 1.2em;
+	margin: 1em 0 0.5em 0;
+}
+
+pre {
+	margin: 0 0 1em 0;
+}
+
+/* MOBILE / MEDIUM
+----------------------*/
+@media screen and (min-width: 30em) and (max-width: 63.236em) {
+
+#container {
+	width: 30em;
+}
+
+h1 {
+	background: url(../img/logo.png) no-repeat 0;
+	font-size: 1.4em;
+	padding: 0.4em 0 0.4em 2.3em;
+}
+
+nav ul li {
+	width: 33%;
+	border-bottom: 1px solid #555;
+}
+
+nav ul a {
+	padding: 0.4em 0;
+}
+
+.hero {
+	padding-bottom: 1em;
+}
+
+
+.figure {
+	width: 100%;
+}
+
+.welcome {
+	max-width: 100%;
+}
+
+h2 {
+	font-size: 1.3em;
+}
+
+.primary-action {
+	display: block;
+	margin: 1em auto 0 auto;
+}
+
+.secondary-action {
+	width: 100%;
+	margin: 1em 0 0 0;
+}
+
+.feature {
+	margin: 1em 0 0 0;
+}
+
+.column {
+	width: auto;
+}
+
+.feature-img {
+	width: 36%;
+}
+
+.feature .column:last-child {
+	margin-left: 0;
+	margin-top: 1em;
+}
+
+}
