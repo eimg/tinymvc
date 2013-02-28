@@ -247,6 +247,7 @@ input[type=text], textarea {
 	width: 100%;
 	max-width: 20em;
 	border: 1px solid #ddd;
+	-webkit-box-shadow: inset 2px 2px 3px #ccc;
 	box-shadow: inset 2px 2px 3px #ccc;
 	padding: 6px 8px;
 	border-radius: 2px;
