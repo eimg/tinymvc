@@ -68,12 +68,46 @@
 	<h4>Controls</h4>
 	<p>When you need to add CSS Link, JS Source, Hyperlinks, Images and Forms to your view template, you should use build-in controls instead of raw HTML. Take a look at <code>template/index.php</code> for example. You might also want to check available controls in <code>includes/controls.php</code>. And, you may extend it as you like for more richer control-set.</p>
 
-	<h3>More</h3>
-	<p>For more information, view the example controllers and other source codes. For example, you can check for available database methods in database wrapper class located in <code>includes/db.php</code>.</p>
+	<h3 id="rest">REST Helper - Updated in build 20140817</h3>
+	<p>
+		TinyMVC now has additional REST helper functions <code>respond()</code>, <code>template()</code> and <code>http_auth()</code>. The purpose of <code>respond()</code> is to handle custom response header and content-type.
+	</p>
 
-	<h3>Example App</h3>
-	<p>Source Code: <a href="https://github.com/eimg/tinynote/">https://github.com/eimg/tinynote/</a><br>
-	Demo: <a href="http://fairwayweb.com/tinynote/">http://fairwayweb.com/tinynote/</a></p>
+	<pre><code>
+	respond($data, $status_code, $content_type);
+	</code></pre>
+
+	<p>
+		<code>$data</code> should be array. <code>$status_code</code> is optional and the default status code is <code>200 OK</code>. Please see <code>includes/core.php</code> for supported status codes. <code>$content_type</code> is also optional and default content type is <code>JSON</code>. Supported content types are JSON, HTML, Plain Text and JavaScript.
+	</p>
+
+	<p>The purpose of <code>template()</code> is to respond pre-defined template (unlike <code>render()</code>, without wrapper) to API requests. Create pre-defined template files in <code>views/templates/</code>.</p>
+
+	<p>The purpose of <code>http_auth()</code> is to provide standard HTTP Authentication. Call it on top of API controller to add simple API authorization. Please don't forget to change username/password list. See the <code>http_auth()</code> function at <code>includes/core.php</code>.</p>
+
+	<h4>Action Map</h4>
+	<p>TinyMVC also has action maping mechanism. To create an action map, create a map file in <code>controllers</code>. For example, if your controller file name is <code>api.php</code>, add <code>api.map.php</code> to define action map. Following is the syntax:</p>
+
+	<pre><code>
+	$GET = array (
+		"greet" => "hello",
+		"leave" => "bye"
+	);
+
+	$POST = array (
+		"foo" => "bar"
+	);
+	</code></pre>
+
+	<p>For example, by given sample above, TinyMVC will invoke <code>hello()</code> function if the request method is <code>GET</code> and <code>action</code> parameter is <code>greet</code>. Just don't forget to define <code>hello()</code> function in controller.</p>
+
+	<p><small>* Manual action mapping is required due to security reason instead of directly tying request action to function.</small></p>
+
+	<h3>More</h3>
+	<p>For more information, see the example controllers and other source codes. For example, you can check for available database methods in database wrapper class located in <code>includes/db.php</code>.</p>
+
+	<h3>Download</h3>
+	<p>Source Code: <a href="https://github.com/eimg/tinymvc/">https://github.com/eimg/tinymvc/</a>
 
 	<h3>Licenses</h3>
 	<p>Tinymvc is license under <?= link_to("home/license", "MIT License") ?>. Please feel free to use, modify and redistribute as you wish.</p>
