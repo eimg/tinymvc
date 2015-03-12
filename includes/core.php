@@ -40,7 +40,13 @@ function routing() {
 }
 
 function requests() {
-	$uri = explode('/', $_SERVER['REQUEST_URI']);
+                #kzs        
+                # Trimming Request parameters from request uri
+                $splt=explode("?",$_SERVER['REQUEST_URI']);
+                $tmp_uri=$splt[0];
+                #kzs
+	$uri = explode('/', $tmp_uri);
+	//$uri = explode('/', $_SERVER['REQUEST_URI']);
 
 	# Trimming sub folders name in case project is in sub folders
 	$path = explode('/',$_SERVER['SCRIPT_NAME']);
