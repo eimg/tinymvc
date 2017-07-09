@@ -113,5 +113,6 @@ For more information, view the example controllers and other source codes. For e
 
 Source Code: <a href="https://github.com/eimg/tinymvc/">https://github.com/eimg/tinymvc/</a>
 
-##Licenses
+## Licenses
+
 Tinymvc is license under <a href="https://github.com/eimg/tinymvc/blob/master/LICENSE.md">MIT License</a>. Please feel free to use, modify and redistribute as you wish.
