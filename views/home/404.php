@@ -1,1 +1,0 @@
-<h2>Home - Action Not Found!</h2>

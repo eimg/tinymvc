@@ -1,118 +1,165 @@
 # TinyMVC
 
-TinyMVC is a PHP micro framework with MVC router and responsive web design boilerplate, especially designed to quickly bootstrap web apps without unnecessary overhead and complexity. The structure and code are construct in simple imperative manner so that developer can get full understanding and control over base framework as well as the app.
+A lightweight, zero-dependency PHP micro-framework, modernized for PHP 8+. TinyMVC is designed to quickly bootstrap web applications with a simple, intuitive, and secure structure. It retains its original simplicity while adopting modern PHP features and best practices.
 
-Requires Apache mod_rewrite and PHP short open tags.
+## Features
 
-## Getting Start
+- **PHP 8+ Ready:** Built with a modern, object-oriented architecture using strict typing.
+- **Composer Inside:** Leverages Composer for PSR-4 autoloading, making class management seamless.
+- **Secure by Design:** Uses a `public/` directory as the web root, ensuring that sensitive application files are not directly accessible.
+- **Simple File-Based Routing:** Routes are cleanly defined in a single, easy-to-manage `src/routes.php` file.
+- **Basic MVC Pattern:** A straightforward implementation of the Model-View-Controller pattern.
+- **Simple Templating:** Includes a basic layout system to keep your views DRY (Don't Repeat Yourself).
+- **Zero Dependencies:** The core framework has no external dependencies.
 
-### config.php
+## Requirements
 
-Set the default controller and database setting in <code>config.php</code>. TinyMVC currently supporting two database driver, MySQL and Sqlite.
-<pre><code>
-$config = array(
-	## Sqlite
-	"dbdriver" => "sqlite",
-	"db" => "data/db.sqlite",
+- PHP 8.0 or higher
+- Composer
 
-	## MySQL
-	# "dbdriver" => "mysql",
-	# "dbhost" => "127.0.0.1",
-	# "dbuser" => "root",
-	# "dbpass" => "",
-	# "dbname" => "tinymvc",
+## Installation & Setup
 
-	"default-controller" => "home"
-);
-</code></pre>
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/eimg/tinymvc.git
+    cd tinymvc
+    ```
 
-### router.php
+2.  **Install dependencies:**
+    (This will only install the Composer autoloader, as there are no external packages.)
+    ```bash
+    composer install
+    ```
 
-Set the route pattern in <code>router.php</code>
-<pre><code>
-$route = array("controller", "action", "id");
-</code></pre>
+3.  **Configuration (Optional):**
+    Database settings are located in `src/config.php`. The project comes pre-configured to use a SQLite database, which requires no setup. If you wish to use MySQL, you can update the configuration accordingly.
 
-The default route map will handle the request in <code>controller/action/id</code> pattern. <code>controller</code> always should be the first value in route map.
+## Running the Application
 
-## Model-View-Controller
+The project includes a convenient script to start a local development server.
+
+```bash
+composer start
+```
+
+The application will be available at `http://localhost:8000`.
+
+## Project Structure
+
+The modernized structure is simple and organized:
+
+```
+.
+├── public/             # Web server root, contains index.php and static assets
+│   ├── css/
+│   ├── js/
+│   └── index.php
+├── src/                # Main application code
+│   ├── Controllers/    # Handles user requests and business logic
+│   ├── Core/           # Core framework classes (Application, Router, etc.)
+│   ├── Models/         # Handles database interaction
+│   ├── Views/          # Contains presentation files (HTML templates)
+│   │   └── layouts/
+│   ├── config.php      # Application configuration
+│   └── routes.php      # Route definitions
+├── vendor/             # Composer autoloader
+└── composer.json
+```
+
+## Usage Guide
+
+### Routing
+
+Routes are defined in `src/routes.php`. The file returns an array where the key is the URI and the value is the controller and method to execute.
+
+**Example:**
+```php
+// src/routes.php
+use App\Controllers\HomeController;
+
+return [
+    // Maps the root URL ('/') to the 'index' method of HomeController
+    '' => [HomeController::class, 'index'],
+
+    // Maps '/home/about' to the 'about' method
+    'home/about' => [HomeController::class, 'about'],
+];
+```
 
 ### Controllers
 
-Controllers are the key and most important components. Each request go to respective controller. For example, if the request is <code>http://example.com/home/add/123</code>, that will reach to <code>home</code> controller with the additional parameters, <code>add/123</code>. Since the route map is <code>controller/action/id</code>, "add" would be "action" and "123" would be "id" in this case.
+Controllers handle the logic for your application's pages. They should be placed in `src/Controllers` and extend the base `App\Core\Controller`.
 
-Controllers files should stored in <code>controllers</code> directory. There are two example controllers included (<code>home.php</code> and <code>todo.php</code>). Take a look at home controller for view-template based apps. Take a look at todo controller for API apps.
+**Example:**
+```php
+// src/Controllers/PageController.php
+namespace App\Controllers;
 
-In default configuration, <code>home</code> has been set as "default-controller". So, if there is no controller pointed in request URL, <code>home</code> will be use as default controller.
+use App\Core\Controller;
 
-<code>redirect()</code> function can be use to redirect through router pattern. For example, </code>redirect("home/contact")</code> will immidiately redirect to <code>http://example.com/home/contact/</code>.
+class PageController extends Controller
+{
+    public function show(): void
+    {
+        $data = [
+            'title' => 'My Page',
+            'content' => 'Welcome to my awesome page!'
+        ];
 
-### Views
+        $this->render('pages/show', $data);
+    }
+}
+```
 
-Views are optional and not necessary in API apps. But, it's useful for template based apps. Each template set should be store in <code>views</code> directory by organization with sub-directory that has the same name with controller.
+### Views & Layouts
 
-Use <code>render()</code> function to wrap your template with template wrapper. You can pass the values to template through <code>$data</code> array.
+Views are the presentation layer of your application and are located in `src/Views`. They are rendered within a layout file (by default, `src/Views/layouts/main.php`).
 
-<pre><code>
-$data['one'] = "value one";
-$data['two'] = "value two";
+You can pass data from your controller to the view using the `$data` array in the `render()` method. The keys of the array are extracted into variables within the view.
 
-render("home", $data);
-</code></pre>
+**Example View:**
+```php
+// src/Views/pages/show.php
 
-In view, each index become variable and variables <code>$one</code> and <code>$two</code> would be available in this case. For security, you may use <code>f()</code> function for outputs, which filter potential XSS script.
+<h2><?= $title ?></h2>
+<p><?= $content ?></p>
+```
 
-Main wrapper HTML template is stored as <code>template/index.php</code>. Other necessary static resources should also store in respective directories under <code>template</code> directory.
+The `$content` from the view is injected into the layout file where `<?= $content ?>` is placed.
 
 ### Models
 
-Models are also optionals. A model file should have same name with controller and should be store in <code>models</code> directory. TinyMVC will use the models if exists.
+Models are responsible for database interactions. They should be placed in `src/Models`. You can use the `App\Core\Database` class to get a PDO instance.
 
-### Controls
+**Example:**
+```php
+// src/Models/User.php
+namespace App\Models;
 
-When you need to add CSS Link, JS Source, Hyperlinks, Images and Forms to your view template, you should use build-in controls instead of raw HTML. Take a look at <code>template/index.php</code> for example. You might also want to check available controls in <code>includes/controls.php</code>. And, you may extend it as you like for more richer control-set.
+use App\Core\Database;
+use PDO;
 
-## REST Helper - Updated in build 20140817
+class User
+{
+    private PDO $db;
 
-TinyMVC now has additional REST helper functions <code>respond()</code>, <code>template()</code> and <code>http_auth()</code>. The purpose of <code>respond()</code> is to handle custom response header and content-type.
+    public function __construct()
+    {
+        $config = require BASE_PATH . '/src/config.php';
+        $this->db = Database::getInstance($config);
+    }
 
-<pre><code>
-respond($data, $status_code, $content_type);
-</code></pre>
+    public function find(int $id): ?array
+    {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-<code>$data</code> should be array. <code>$status_code</code> is optional and the default status code is <code>200 OK</code>. Please see <code>includes/core.php</code> for supported status codes. <code>$content_type</code> is also optional and default content type is <code>JSON</code>. Supported content types are JSON, HTML, Plain Text and JavaScript.
+        return $user ?: null;
+    }
+}
+```
 
-The purpose of <code>template()</code> is to respond pre-defined template (unlike <code>render()</code>, without wrapper) to API requests. Create pre-defined template files in <code>views/templates/</code>.
+## License
 
-The purpose of <code>http_auth()</code> is to provide standard HTTP Authentication. Call it on top of API controller to add simple API authorization. Please don't forget to change username/password list. See the <code>http_auth()</code> function at <code>includes/core.php</code>.
-
-### Action Map
-
-TinyMVC also has action maping mechanism. To create an action map, create a map file in <code>controllers</code>. For example, if your controller file name is <code>api.php</code>, add <code>api.map.php</code> to define action map. Following is the syntax:
-
-<pre><code>
-$GET = array (
-	"greet" => "hello",
-	"leave" => "bye"
-);
-
-$POST = array (
-	"foo" => "bar"
-);
-</code></pre>
-
-For example, by given sample above, TinyMVC will invoke <code>hello()</code> function if the request method is <code>GET</code> and <code>action</code> parameter is <code>greet</code>. Just don't forget to define <code>hello()</code> function in controller.
-
-<small>* Manual action mapping is required due to security reason instead of directly tying request action to function.</small>
-
-### More
-
-For more information, view the example controllers and other source codes. For example, you can check for available database methods in database wrapper class located in <code>includes/db.php</code>.
-
-## Download
-
-Source Code: <a href="https://github.com/eimg/tinymvc/">https://github.com/eimg/tinymvc/</a>
-
-## Licenses
-
-Tinymvc is license under <a href="https://github.com/eimg/tinymvc/blob/master/LICENSE.md">MIT License</a>. Please feel free to use, modify and redistribute as you wish.
+TinyMVC is licensed under the [MIT License](LICENSE.md). Feel free to use, modify, and redistribute it as you wish.
